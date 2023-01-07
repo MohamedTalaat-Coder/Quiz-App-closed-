@@ -28,8 +28,6 @@ def register():
         print("-------------->", error, username, password)
         
         cursor.execute(f"INSERT INTO user (username, password) VALUES ('{username}', '{generate_password_hash(password)}')")
-
-        print("************************>>", username, password)
         db.commit()
     return render_template("auth/register.html")
 
@@ -51,7 +49,7 @@ def login():
 
         if error is None:
             session.clear()
-            session['user_id'] = user[1]
+            session['user_id'] = user[0]
             
             return redirect(url_for("auth.login"))
 
@@ -62,8 +60,8 @@ def login():
 
 @bp.before_app_request
 def load_logged_in_user():
-    user_id = session.get("user_id")
 
+    user_id = session.get("user_id")
     if user_id is None:
         g.user = None
     else:
@@ -72,11 +70,12 @@ def load_logged_in_user():
 
         cursor.execute(f"SELECT * FROM user WHERE id = '{user_id}' ")
         g.user = cursor.fetchone()
+        print("userid", g.user, "session", user_id)
 
 @bp.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("index.html"))
+    return redirect(url_for("index"))
 
 def login_required(view):
     @functools.wraps(view)

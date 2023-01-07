@@ -33,12 +33,13 @@ def close_db(db):
 def init_db():
     db = connect_db()
     with open("Quiz\schema.sql", 'r') as f:
-        with db.cursor() as cursor:
-            cursor.execute(f.read(), multi=True)
-            cursor.close()
-            db = connect_db()
-            cursor = db.cursor()
-        db.commit()
+        sqlf = f.read()
+        f.close()
+    sql_commands = sqlf.split(";")
+    for command in sql_commands:
+        cursor = db.cursor()
+        cursor.execute(command)
+    db.commit()
 
 @click.command('init-db')
 def init_db_command():
