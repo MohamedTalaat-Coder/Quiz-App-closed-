@@ -25,7 +25,6 @@ def register():
         elif not password:
             error = "password is required"
         
-        print("-------------->", error, username, password)
         
         cursor.execute(f"INSERT INTO user (username, password) VALUES ('{username}', '{generate_password_hash(password)}')")
         db.commit()
@@ -70,7 +69,6 @@ def load_logged_in_user():
 
         cursor.execute(f"SELECT * FROM user WHERE id = '{user_id}' ")
         g.user = cursor.fetchone()
-        print("userid", g.user, "session", user_id)
 
 @bp.route("/logout")
 def logout():
