@@ -1,0 +1,4 @@
+include Quiz/ schema.sql
+graft Quiz/static
+graft Quiz/templates
+global-exclude *.pyc
