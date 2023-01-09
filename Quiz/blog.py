@@ -23,13 +23,17 @@ def get_question(id, check_user=True):
 
 bp = Blueprint("blog", __name__)
 
+@bp.route("/hello")
+def hello():
+    return "hello, world"
+
+
 @bp.route("/")
 def index():
     db = connect_db()
     cursor = db.cursor()
     cursor.execute(f"SELECT id, Question, Answer FROM questions WHERE user_id = {g.user[0]}  ORDER BY id DESC ")
     questions = cursor.fetchall()
-
     return render_template("blog/index.html", questions=questions)
 
 @bp.route("/create", methods=("GET", "POST"))

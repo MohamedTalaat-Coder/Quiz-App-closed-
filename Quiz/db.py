@@ -17,12 +17,12 @@ def connect_db():
     if not db.is_connected():
         raise ConnectionError("could not connect to db")
 
-    db_info = db.get_server_info()
-    print("server: ", db_info)
-    cursor = db.cursor()
-    cursor.execute("SELECT DATABASE();")
-    database_name = cursor.fetchone()
-    print("Connected to: ", database_name)
+    # db_info = db.get_server_info()
+    # print("server: ", db_info)
+    # cursor = db.cursor()
+    # cursor.execute("SELECT DATABASE();")
+    # database_name = cursor.fetchone()
+    # print("Connected to: ", database_name)
     return db
 
 
